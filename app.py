@@ -73,12 +73,35 @@ if st.sidebar.checkbox("Compare between Subjects" , False):
     subjects = list(filter(lambda x: x not in ["ID" ,"GPA" , "GPA2" , "GPA_LevelOne" , "Name"] , headers ))
     options = st.sidebar.multiselect("Pick" , subjects , default =["English", "Computer"])
     dic ={}
+    dicp={}
     for option in options:
         dic[option] = df[option].value_counts()
-    
+        dicp[option] = df[option].value_counts(normalize=True) * 100
+
     comparsion = pd.DataFrame(dic)
+    comparsionp = pd.DataFrame(dicp)
+
     st.write(comparsion)
-    comparsion.plot(kind="bar")
+    st.write(comparsionp)
+    comparsion.plot(kind="bar"  )
+    plt.xlabel("Mark")
+    plt.ylabel("Count")
+
+    st.pyplot()
+    comparsionp.plot(kind="bar")
+    plt.xlabel("Mark")
+    plt.ylabel("Count Perecentage")
+
+    st.pyplot()
+    sns.heatmap(comparsion)
+    plt.xlabel("Mark")
+    plt.ylabel("Count Perecentage")
+
+    st.pyplot()
+    sns.heatmap(comparsionp)
+    plt.xlabel("Mark")
+    plt.ylabel("Count")
+
     st.pyplot()
 
 
