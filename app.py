@@ -23,13 +23,30 @@ def load_data(PATH):
 
 if file_uploader != None:
     df = load_data(file_uploader)
-    if st.checkbox("Show raw data " , False):
+    show_raw_data = st.checkbox("Show raw data " , False)
+    if show_raw_data:
         st.write(df)
 
 search = st.text_input("Enter student id")
 if search != "":
     search_result = df.query("ID == @search")
     st.table(search_result)
+
+# filter by GPA
+if st.sidebar.checkbox("Do you want to filter by  GPA" , False):
+    GPA1 = st.sidebar.slider("GPA for semester 1" ,  0 ,  4)
+    GPA2 = st.sidebar.slider("GPA for semester 2" , 0 , 4)
+    GPA3 = st.sidebar.slider("GPA cumulative for Level 1" , 0 , 4)
+    if st.sidebar.button("Filter"):
+        df = df.query("GPA >= @GPA1 and GPA2 >= @GPA2 and GPA_LevelOne >= @GPA3")
+        st.sidebar.title("Filter is applied")
+        st.header("Filterd Data: this filter applied to over all application function")
+        st.write(df)
+        
+    else:
+        st.sidebar.title("No filter is applied")
+
+
 
 # Show summary 
 if st.sidebar.checkbox("Do you want a summary of GPA" , False):
