@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plotly.graph_objects as go
+
 
 st.title("Business Information System Level 1 -- Students result analysis")
 
@@ -27,10 +29,27 @@ if file_uploader != None:
     if show_raw_data:
         st.write(df)
 
+
+# Search about student
 search = st.text_input("Enter student id")
 if search != "":
     search_result = df.query("ID == @search")
-    st.table(search_result)
+    st.write(search_result)
+    GPA_student = float(search_result["GPA_LevelOne"])
+    # st.write(GPA_student)
+    speadometer = (df.query("GPA_LevelOne <= @GPA_student").count() / df.count() * 100)[0]
+    # st.write(speadometer)
+    # Speadometer
+    st.title("Compare You Result With Other students")
+    fig = go.Figure(go.Indicator(
+    domain = {'x': [0, 1], 'y': [0, 1]},
+    value = speadometer,
+    mode = "gauge+number+delta",
+    title = {'text': "Vertical Analysis  for GPA_LevelOne"},
+    gauge = {'axis': {'range': [None, 100]}} ))
+    st.plotly_chart(fig)
+
+
 
 # filter by GPA
 if st.sidebar.checkbox("Do you want to filter by  GPA" , False):
@@ -103,8 +122,6 @@ if st.sidebar.checkbox("Compare between Subjects" , False):
     plt.ylabel("Count")
 
     st.pyplot()
-
-
 
 
 
