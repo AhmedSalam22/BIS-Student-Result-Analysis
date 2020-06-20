@@ -66,9 +66,23 @@ if st.sidebar.checkbox("Do you want a summary of GPA" , False):
     sns.distplot(df["GPA_LevelOne"])
     st.pyplot()
 
-  
+# Compare between subjects
+if st.sidebar.checkbox("Compare between Subjects" , False):
+    st.header("Compare between subjects")
+    headers = list(df)
+    subjects = list(filter(lambda x: x not in ["ID" ,"GPA" , "GPA2" , "GPA_LevelOne" , "Name"] , headers ))
+    options = st.sidebar.multiselect("Pick" , subjects , default =["English", "Computer"])
+    dic ={}
+    for option in options:
+        dic[option] = df[option].value_counts()
+    
+    comparsion = pd.DataFrame(dic)
+    st.write(comparsion)
+    comparsion.plot(kind="bar")
+    st.pyplot()
 
-  
+
+
 
 
 
