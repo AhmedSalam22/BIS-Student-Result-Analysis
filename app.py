@@ -1,4 +1,6 @@
 import streamlit as st
+import streamlit.components.v1 as components
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,7 +10,9 @@ import plotly.graph_objects as go
 def main():
 
     st.title("Business Information System Level 1 -- Students result analysis")
-
+    components.html("""
+    <iframe   width="560" height="315" async src="https://www.youtube.com/embed/zaoiriEbncc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    """ , scrolling = True , height = 350)  
     file_uploader = st.file_uploader("Upload your Excel file" , type="xlsx")
 
     def convert_string_to_float(x):
@@ -124,8 +128,26 @@ def main():
 
         st.pyplot()
 
+    if st.sidebar.checkbox("Send feedback or contact with us!" , False):
+        st.title("Contact with us")
+        message = st.text_area("message")
+        import smtplib, ssl
+
+        if st.button("Send"):
+            port = 587  # For starttls
+            smtp_server = "smtp.gmail.com"
+            receiver_email = "0evil0secret0@gmail.com"
+            password = "asd951753"
 
 
+            context = ssl.create_default_context()
+            with smtplib.SMTP(smtp_server, port) as server:
+                server.ehlo()  # Can be omitted
+                server.starttls(context=context)
+                server.ehlo()  # Can be omitted
+                server.login(receiver_email, password)
+                server.sendmail("None", receiver_email, message.encode('utf-8'))
+                st.success("We recieve your message!")
 if __name__ == "__main__":
     main()
 
