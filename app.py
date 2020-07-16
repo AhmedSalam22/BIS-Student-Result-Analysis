@@ -10,9 +10,9 @@ import plotly.graph_objects as go
 def main():
 
     st.title("Business Information System Level 1 -- Students result analysis")
-    components.html("""
-    <iframe   width="560" height="315" async src="https://www.youtube.com/embed/zaoiriEbncc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    """ , scrolling = True , height = 350)  
+    components.iframe("""
+    https://www.youtube.com/embed/zaoiriEbncc""" , scrolling = True , height = 350) 
+     
     file_uploader = st.file_uploader("Upload your Excel file" , type="xlsx")
 
     def convert_string_to_float(x):
