@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.graph_objects as go
+import os
 
 def main():
 
@@ -33,7 +34,9 @@ def main():
         show_raw_data = st.checkbox("Show raw data " , False)
         if show_raw_data:
             st.write(df)
-
+    else:
+        df=load_data(os.join(os.path.dirname(os.path.abspath(__file__), "result.xlsx")))
+      
 
     # Search about student
     search = st.text_input("Enter student id")
