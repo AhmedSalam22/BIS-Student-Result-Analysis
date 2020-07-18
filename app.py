@@ -35,7 +35,7 @@ def main():
         if show_raw_data:
             st.write(df)
     else:
-        df=load_data(os.path.join(os.path.dirname(os.path.abspath(__file__), "result.xlsx")))
+        df=load_data(os.path.join(os.path.dirname(os.path.abspath(__file__)), "result.xlsx"))
       
 
     # Search about student
